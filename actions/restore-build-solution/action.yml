@@ -1,0 +1,35 @@
+name: 'Restore and Build .NET Solution'
+description: 'Restores package depenendencies and Builds the .NET Solution'
+inputs:
+  install-dotnet:
+    description: 'Determines whether to install the .NET SDK. Default: "false"'
+    required: false
+    default: 'true'
+  dotnet-version:
+    description: 'Specifies the version of .NET to download. Default: "10.0.x"'
+    required: false
+    default: '10.0.x'
+  solution-file:
+    description: 'Solution file path. Default: "./src"'
+    required: false
+    default: './src'
+  nuget-config-file:
+    description: 'NuGet config file path. Path is relative to the solution file path: "./NuGet.config"'
+    required: false
+    default: './NuGet.config'
+
+runs:
+  using: composite
+  steps:
+  - name: 'Restore Solution'
+    uses: KhaosVoid/KhaosVoid-GitHub-Shared/actions/restore-solution@main
+    with:
+      install-dotnet: ${{ inputs.install-dotnet }}
+      dotnet-version: ${{ inputs.dotnet-version }}
+      solution-file: ${{ inputs.solution-file }}
+      nuget-config-file: ${{ inputs.nuget-config-file }}
+
+  - name: 'Build Solution'
+    uses: KhaosVoid/KhaosVoid-GitHub-Shared/actions/build-solution@main
+    with:
+      solution-file: ${{ inputs.solution-file }}
