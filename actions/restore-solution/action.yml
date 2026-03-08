@@ -1,0 +1,39 @@
+name: 'Restore Solution'
+description: 'Restores package dependencies for the .NET Solution'
+inputs:
+  install-dotnet:
+    description: 'Determines whether to install the .NET SDK. Default: "false"'
+    required: false
+    default: 'false'
+  dotnet-version:
+    description: 'Specifies the version of .NET to download. Default: "8.0.x"'
+    required: false
+    default: '10.0.x'
+  solution-file:
+    description: 'Solution file path. Default: "./src"'
+    required: false
+    default: './src'
+  nuget-config-file:
+    description: 'NuGet config file Path. Path is relative to the solution file path: "./NuGet.config"'
+    required: false
+    default: './NuGet.config'
+  artifactory-username-secret:
+    description: 'The Artifactory Username secret.'
+    required: true
+  artifactory-api-key-secret:
+    description: 'The Artifactory API Key secret.'
+    required: true
+
+runs:
+  using: composite
+  steps:
+  - name: 'Setup .NET'
+    if: ${{ inputs.install-dotnet == 'true' }}
+    uses: actions/setup-dotnet@v5
+    with:
+      dotnet-version: ${{ inputs.dotnet-version }}
+
+  - name: 'Restore Package Dependencies'
+    working-directory: ${{ inputs.solution-file }}
+    shell: bash
+    run: dotnet restore
