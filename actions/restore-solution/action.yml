@@ -6,7 +6,7 @@ inputs:
     required: false
     default: 'false'
   dotnet-version:
-    description: 'Specifies the version of .NET to download. Default: "8.0.x"'
+    description: 'Specifies the version of .NET to download. Default: "10.0.x"'
     required: false
     default: '10.0.x'
   solution-file:
