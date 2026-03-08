@@ -29,8 +29,6 @@ runs:
     run: >
       dotnet publish ${{ inputs.project-file }}
       --configuration Release
-      --no-restore
-      --no-build
       --self-contained
       --runtime ${{ inputs.dotnet-runtime-id }}
       --property:AssemblyName=${{ inputs.application-name }}
