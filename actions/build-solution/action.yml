@@ -1,0 +1,18 @@
+name: 'Build Solution'
+description: 'Builds the .NET Solution'
+inputs:
+  solution-file:
+    description: 'Solution file path. Default: "./src"'
+    required: false
+    default: './src'
+
+runs:
+  using: composite
+  steps:
+  - name: 'Build Solution'
+    working-directory: ${{ inputs.solution-file }}
+    shell: bash
+    run: >
+      dotnet build
+      --configuration Release
+      --no-restore
