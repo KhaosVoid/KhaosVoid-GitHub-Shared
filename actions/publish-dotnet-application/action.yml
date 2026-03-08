@@ -33,6 +33,7 @@ runs:
       --runtime ${{ inputs.dotnet-runtime-id }}
       --property:AssemblyName=${{ inputs.application-name }}
       --property:PublishSingleFile=true
+      --property:DebugType=None
       --property:Version=${{ inputs.version }}
       --property:AssemblyVersion=${{ inputs.version }}
       --property:InformationalVersion=${{ inputs.version }}
