@@ -17,12 +17,6 @@ inputs:
     description: 'NuGet config file Path. Path is relative to the solution file path: "./NuGet.config"'
     required: false
     default: './NuGet.config'
-  artifactory-username-secret:
-    description: 'The Artifactory Username secret.'
-    required: true
-  artifactory-api-key-secret:
-    description: 'The Artifactory API Key secret.'
-    required: true
 
 runs:
   using: composite
