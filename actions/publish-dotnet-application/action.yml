@@ -22,7 +22,7 @@ runs:
   using: composite
   steps:
   - shell: bash
-    run: echo "COPYRIGHT_YEAR=$(date + '%Y')" >> $GITHUB_ENV
+    run: echo "COPYRIGHT_YEAR=$(date +'%Y')" >> $GITHUB_ENV
 
   - name: 'Publish .NET Application'
     shell: bash
