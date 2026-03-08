@@ -1,0 +1,42 @@
+name: 'Publish .NET Application'
+description: 'Publishes a .NET application'
+inputs:
+  project-file:
+    description: 'Project file path.'
+    required: true
+  dotnet-runtime-id:
+    description: '.NET Runtime ID to use when publishing.'
+    required: true
+  application-name:
+    description: 'The application name to publish the .NET application with.'
+    required: true
+  version:
+    description: 'The version to set for the published .NET application.'
+    required: true
+  publish-output-directory:
+    description: 'The output directory to publish the .NET application to.'
+    required: false
+    default: './PublishOutput'
+
+runs:
+  using: composite
+  steps:
+  - shell: bash
+    run: echo "COPYRIGHT_YEAR=$(date + '%Y')" >> $GITHUB_ENV
+
+  - name: 'Publish .NET Application'
+    shell: bash
+    run: >
+      dotnet publish ${{ inputs.project-file }}
+      --configuration Release
+      --no-restore
+      --no-build
+      --self-contained
+      --runtime ${{ inputs.dotnet-runtime-id }}
+      --property:AssemblyName=${{ inputs.application-name }}
+      --property:PublishSingleFile=true
+      --proeprty:Version=${{ inputs.version }}
+      --property:AssemblyVersion=${{ inputs.version }}
+      --property:InformationalVersion=${{ inputs.version }}
+      --property:Copyright="Copyright %A9 ${{ env.COPYRIGHT_YEAR }} Zach 'KhaosVoid' Tommey"
+      --output ${{ inputs.publish-output-directory }}
